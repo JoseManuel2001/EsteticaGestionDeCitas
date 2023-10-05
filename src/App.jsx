@@ -11,7 +11,7 @@ function App() {
     };
     const handleClickEditar = (id) => {
 
-        navigate(`/editarCita/${id}`);
+        navigate(`/editarCitas/${id}`);
     };
 
     const handleEliminarUsuario = (id) => {

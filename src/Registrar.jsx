@@ -32,7 +32,7 @@ function Registrar() {
 
         // Realiza una solicitud POST para crear un nuevo usuario
         axios
-            .post("http://localhost/api/citas", { "data": newUser }) // Cambia la URL a la correcta
+            .post("http://localhost:1337/api/citas", { "data": newUser }) // Cambia la URL a la correcta
             .then((response) => {
                 // Aquí puedes manejar la respuesta si es necesario
                 console.log("Cita registrada:", response.data.data);
@@ -80,7 +80,7 @@ function Registrar() {
                 </label>
                 <br />
                 <label>
-                    Horario:
+                    Costo:
                     <input type="text" name="Costo" value={newUser.Costo} onChange={handleInputChange} required />
                 </label>
                 <br />
