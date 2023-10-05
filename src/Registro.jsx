@@ -1,6 +1,7 @@
 // Registro.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 function Registro() {
     const [Nombre, setNombre] = useState('');
@@ -8,6 +9,10 @@ function Registro() {
     const [email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
   
+    const handleCancelar = () => {
+      Navigate("/")
+  }
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
@@ -28,7 +33,7 @@ function Registro() {
   return (
     <div>
       <h2>Registro</h2>
-      <form onSubmit={handleSubmit}>
+      <form >
         <label>
           Nombre:
           <input type="text" value={Nombre} onChange={(e) => setNombre(e.target.value)} />
@@ -49,8 +54,9 @@ function Registro() {
           <input type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
         </label>
         <br />
-        <button type="submit">Registrarse</button>
-      </form>
+        <button onClick={handleSubmit} type="submit">Registrarse</button>
+        <button onClick={handleCancelar} type="onClick">Cancelar</button>
+      </form> 
     </div>
   );
 }
