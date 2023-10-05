@@ -19,7 +19,6 @@ render(
       <Route path="/Registro" element={<Registro />} />
       <Route path="/App" element={<App />} />
       <Route path="/editarCitas/:id" element={<EditarCitas />} />
-      <Route path="/editarCitas" element={<EditarCitas />} />
       <Route path="/Registrar" element={<Registrar />} />
     </Routes>
   </BrowserRouter>,
