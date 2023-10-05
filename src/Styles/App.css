@@ -1,0 +1,15 @@
+
+.App DatePicker{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1000%;
+    background-color: blueviolet;
+}
+
+.App{
+    display: flex; 
+    
+    align-items: center;
+}

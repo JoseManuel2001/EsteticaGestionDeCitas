@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
 
 function App() {
+    var today = new Date();
+
+    // obtener la fecha de hoy en formato `MM/DD/YYYY`
+    var now = today.toLocaleDateString('en-US');
+    console.log(now);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const handleClickAgregar = () => {
         navigate("/Registrar");
@@ -48,7 +56,11 @@ function App() {
 
     return (
         <>
-            <div className="Usuarios">
+            <div className="App">
+                <label> Selecciona el dia</label>
+                <DatePicker className="Date" selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
+                
+                <>
                 <button className='Button' onClick={handleClickAgregar}>Añadir</button>
                 <table className='UsuariosT'>
                     <thead >
@@ -74,6 +86,7 @@ function App() {
                         ))}
                     </tbody>
                 </table>
+                </>
             </div>
         </>
     );
