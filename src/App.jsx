@@ -7,7 +7,7 @@ function App() {
     const navigate = useNavigate();
 
     const handleClickAgregar = () => {
-        navigate("/registrarCita");
+        navigate("/Registrar");
     };
     const handleClickEditar = (id) => {
 
