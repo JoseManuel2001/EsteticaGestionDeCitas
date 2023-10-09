@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.divHeader{
+    font-family: 'Lato', sans-serif;
+    color: #282828;
+    background-color: #d18fdd;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 127px;
+}
+
+.divHeader .title{
+    font-size: 30px;
+    margin-bottom: 0px;
+}
+
+.divHeader .desc{
+    font-size: 18px;
+    margin-top: 0px;
+    margin-bottom: 12px;
+}
+
+.divHeader .img{
+    width: 40px;
+    margin-right: 10px;
+}
+
+.divHeader p{
+    display: flex;
+    justify-content: center;
+    
+
+}
+
+.divLogout{
+    height: 100%;
+    width: 18%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-image: url('../../public/Imagenes/Captura.PNG');
+    background-repeat: no-repeat;
+    background-size: 150px;
+    background-position: right;
+}
+
+.divBack{
+    height: 100%;
+    width: 12%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-image: url('../../public/Imagenes/Captura.PNG');
+    background-repeat: no-repeat;
+    background-size: 150px;
+    background-position: left;
+}
+
+.user{
+    margin: 0 10px 0 10px;
+}
+
+.iconoUser{
+    color: white;
+}
+
+.btnLogout{
+    height: 26px;
+    background-color: #744a86;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    transition: 0.3s;
+}
+
+.btnLogout:hover{
+    background-color: #5a346a;
+    box-shadow: 0px 0px 2px 1px #9870ac;
+}
+
+.btnBack{
+    height: 26px;
+    background-color: #744a86;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    transition: 0.3s;
+}
+
+.btnBack:hover{
+    background-color: #5a346a;
+    box-shadow: 0px 0px 2px 1px #9870ac;
+}
+
+.btnBack p{
+    margin: 0 0 0 5px;
+    font-weight: bold;
+}

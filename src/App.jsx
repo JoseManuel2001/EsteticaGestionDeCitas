@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
+import Header from './Header';
 
 function App() {
     var today = new Date();
@@ -24,7 +25,7 @@ function App() {
 
     const handleEliminarUsuario = (id) => {
         // Realizar una solicitud DELETE para eliminar el usuario
-        axios.delete(`http://localhost:1337/api/citas/${id}`)
+        axios.delete(`http://172.27.98.6:1337/api/citas/${id}`)
             .then(response => {
                 console.log("CitaEliminada:", response.data);
                 // Actualizar la lista de usuarios después de eliminar
@@ -37,7 +38,7 @@ function App() {
 
     useEffect(() => {
         // Realizar la solicitud GET cuando el componente se monta
-        axios.get('http://localhost:1337/api/citas')
+        axios.get('http://172.27.98.6:1337/api/citas')
             .then(response => {
                 // Almacenar los datos en el estado
                 const mappedUsers = response.data.data.map((user) => ({
@@ -56,6 +57,7 @@ function App() {
 
     return (
         <>
+            <Header title='Citas' desc='Lista de citas'/>
             <div className="App">
                 <label> Selecciona el dia</label>
                 <DatePicker className="Date" selected={selectedDate} onChange={(date) => setSelectedDate(date)} />

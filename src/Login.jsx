@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
 import '../src/Styles/Login.css'
+import { UserContext } from './UserContext';
+import { useContext } from 'react';
 
 
 
 
 function Login() {
 
-    
+    const { login } = useContext(UserContext);
     const Navigate = useNavigate();
     const [loginData, setLoginData] = useState({
         Genero: '',
@@ -27,7 +29,7 @@ function Login() {
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:1337/api/usuarios')
+        axios.get('http://172.27.98.6:1337/api/usuarios')
             .then(response => {
                 // Almacenar los datos en el estado
                 const mappedUsers = response.data.data.map((user) => ({
@@ -39,6 +41,7 @@ function Login() {
                 const isValidUser = mappedUsers.some(user => user.Nombre === loginData.Nombre && user.Password === loginData.Password);
                 if (isValidUser) {
                     console.log('Inicio de sesión exitoso');
+                    login(loginData);
                    Navigate("/App")
 
                 } else {
