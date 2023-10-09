@@ -38,7 +38,7 @@ function Login() {
                 const isValidUser = mappedUsers.some(user => user.Nombre === loginData.Nombre && user.Password === loginData.Password);
                 if (isValidUser) {
                     console.log('Inicio de sesión exitoso');
-                   // Navigate("/admin")
+                   Navigate("/App")
 
                 } else {
                     console.log('Credenciales incorrectas');
