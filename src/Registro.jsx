@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
+import '../src/Styles/Registro.css'
 
 function Registro() {
     const [Nombre, setNombre] = useState('');
@@ -46,7 +47,7 @@ function Registro() {
         <br />
         <label>
           Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className='label' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
         <br />
         <label>
