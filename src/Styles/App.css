@@ -1,15 +1,71 @@
-
-.App DatePicker{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 1000%;
-    background-color: blueviolet;
+/* Estilos para la clase 'App' */
+.App {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fdeff2;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.App{
-    display: flex; 
-    
-    align-items: center;
+/* Estilos para el Date Picker */
+.Date {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ffb6c1;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+/* Estilos para los botones */
+.Button {
+    background-color: #ff66a3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.Button:hover {
+    background-color: #ff3385;
+}
+
+/* Estilos para la tabla y sus celdas */
+.UsuariosT {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.UsuariosT th,
+.UsuariosT td {
+    border: 1px solid #ff99bb;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Estilos para las celdas especiales */
+.UsuariosT .th1 {
+    font-weight: bold;
+}
+
+/* Estilos para los botones de la tabla */
+.Botones button {
+    margin-right: 10px;
+    background-color: #ff66a3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.Botones button:hover {
+    background-color: #ff3385;
 }
