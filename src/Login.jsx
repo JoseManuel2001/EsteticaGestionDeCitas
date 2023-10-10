@@ -29,7 +29,7 @@ function Login() {
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        axios.get('http://172.27.98.6:1337/api/usuarios')
+        axios.get('http://localhost:1337/api/usuarios')
             .then(response => {
                 // Almacenar los datos en el estado
                 const mappedUsers = response.data.data.map((user) => ({
@@ -63,6 +63,8 @@ function Login() {
             <div className="Login">
             <form className='FormLogin'>
                 <h1>Inicio de Sesión</h1>
+
+                <h1>Agu's look</h1>
                 <input
                     type="text"
                     name="Nombre"
