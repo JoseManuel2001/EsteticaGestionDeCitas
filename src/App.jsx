@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import DatePicker from "react-datepicker";
-import 'react-datepicker/dist/react-datepicker.css'
+import 'react-datepicker/dist/react-datepicker.css';
 import Header from './Header';
+import { UserContext } from './UserContext'; // Importa el contexto de usuario
 import '../src/Styles/App.css';
 
 function App() {
     const [data, setData] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(new Date()); // Inicializa el DatePicker con la fecha actual
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const { user } = useContext(UserContext); // Obtén el usuario autenticado del contexto
     const navigate = useNavigate();
 
     const handleClickAgregar = () => {
@@ -36,19 +38,20 @@ function App() {
         axios.get('http://localhost:1337/api/citas')
             .then(response => {
                 // Filtra las citas para mostrar solo las del día seleccionado
-                const filteredCitas = response.data.data.filter(user => {
-                    const citaFecha = user.attributes.Fecha.split('T')[0];
+                const filteredCitas = response.data.data.filter(cita => {
+                    const citaFecha = cita.attributes.Fecha.split('T')[0];
                     return citaFecha === formattedDate;
                 });
-                const mappedUsers = filteredCitas.map(user => ({
-                    id: user.id,
-                    Nombre: user.attributes.Nombre,
-                    Servicio: user.attributes.Servicio,
-                    Horario: user.attributes.Horario,
-                    Costo: user.attributes.Costo,
-                    Fecha: user.attributes.Fecha,
+                const mappedCitas = filteredCitas.map(cita => ({
+                    id: cita.id,
+                    userId: cita.attributes.userId, // Suponiendo que este es el campo que indica el ID del usuario que creó la cita
+                    Nombre: cita.attributes.Nombre,
+                    Servicio: cita.attributes.Servicio,
+                    Horario: cita.attributes.Horario,
+                    Costo: cita.attributes.Costo,
+                    Fecha: cita.attributes.Fecha,
                 }));
-                setData(mappedUsers);
+                setData(mappedCitas);
             })
             .catch(error => {
                 console.error('Error al obtener datos:', error);
@@ -73,16 +76,20 @@ function App() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.Nombre}</td>
-                                <td className='td1'>{user.Servicio}</td>
-                                <td>{user.Horario}</td>
-                                <td>{user.Costo}</td>
-                                <td>{user.Fecha}</td>
+                        {data.map((cita) => (
+                            <tr key={cita.id}>
+                                <td>{cita.Nombre}</td>
+                                <td className='td1'>{cita.Servicio}</td>
+                                <td>{cita.Horario}</td>
+                                <td>{cita.Costo}</td>
+                                <td>{cita.Fecha}</td>
                                 <td className='Botones'>
-                                    <button onClick={() => handleClickEditar(user.id)}>Editar</button>
-                                    <button onClick={() => handleEliminarUsuario(user.id)}>Eliminar</button>
+                                    {user && user.id === cita.userId && ( // Muestra botones solo si el usuario autenticado creó la cita
+                                        <>
+                                            <button onClick={() => handleClickEditar(cita.id)}>Editar</button>
+                                            <button onClick={() => handleEliminarUsuario(cita.id)}>Eliminar</button>
+                                        </>
+                                    )}
                                 </td>
                             </tr>
                         ))}
@@ -94,5 +101,6 @@ function App() {
 }
 
 export default App;
+
 
 

@@ -11,6 +11,7 @@ function EditarCita() {
         Servicio: "",
         Horario: "",
         Costo: "",
+        Fecha: "", // Nuevo campo para la fecha
     });
     const [error, setError] = useState(null);
 
@@ -19,7 +20,6 @@ function EditarCita() {
         axios.get(`http://localhost:1337/api/citas/${id}`)
             .then(response => {
                 // Almacenar los datos del usuario en el estado
-                console.log(response.data.data.attributes)
                 setEditedUser(response.data.data.attributes);
             })
             .catch(error => {
@@ -75,6 +75,11 @@ function EditarCita() {
                 </label>
                 <br />
                 <label>
+                    Fecha:
+                    <input type="date" name="Fecha" value={editedUser.Fecha} onChange={handleInputChange} required />
+                </label>
+                <br />
+                <label>
                     Horario:
                     <input type="text" name="Horario" value={editedUser.Horario} onChange={handleInputChange} required />
                 </label>
@@ -84,8 +89,8 @@ function EditarCita() {
                     <input type="text" name="Costo" value={editedUser.Costo} onChange={handleInputChange} required />
                 </label>
                 <br />
-                <button  type="submit">Guardar Cambios</button>
-                <button  onClick={() => navigate("/App")}>Cancelar</button>
+                <button type="submit">Guardar Cambios</button>
+                <button onClick={() => navigate("/App")}>Cancelar</button>
             </form>
         </>
     );
