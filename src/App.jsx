@@ -23,7 +23,7 @@ function App() {
 
     const handleEliminarUsuario = (id) => {
         // Realizar una solicitud DELETE para eliminar el usuario
-        axios.delete(`http://172.27.98.6:1337/api/citas/${id}`)
+        axios.delete(`http://localhost:1337/api/citas/${id}`)
             .then(response => {
                 console.log("Cita Eliminada:", response.data);
                 setData(prevData => prevData.filter(user => user.id !== id));
