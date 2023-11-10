@@ -42,7 +42,7 @@ function Login() {
                 if (isValidUser) {
                     console.log('Inicio de sesión exitoso');
                     login(loginData);
-                   Navigate("/App")
+                   Navigate("/LoginS")
 
                 } else {
                     console.log('Credenciales incorrectas');
