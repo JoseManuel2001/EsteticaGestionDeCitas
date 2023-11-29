@@ -1,11 +1,39 @@
 /* Estilos para la clase 'App' */
+.content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+
 .App {
-    max-width: 800px;
-    margin: 0 auto;
+    width: 90%;
     padding: 20px;
     background-color: #fdeff2;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 60px 1px pink;
+}
+
+.App label{
+    margin: 0px;
+    margin-right: 8px;
+    margin-bottom: 15px;
+}
+
+.App input{
+    cursor: pointer;
+    font-size: 13px;
+    color: rgb(112, 112, 112);
+    height: 30px;
+}
+
+.opciones{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 20px;
+
 }
 
 /* Estilos para el Date Picker */
@@ -28,6 +56,15 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.ButtonA{
+    margin: 0;
+    margin-bottom: 16px;
+    padding: 5px;
+    margin-left: 15px;
+    height: 30px;
+    font-size: 13px;
 }
 
 .Button:hover {
@@ -68,4 +105,9 @@
 
 .Botones button:hover {
     background-color: #ff3385;
+}
+
+.divRep{
+    margin-top: 20px;
+    text-align: center;
 }

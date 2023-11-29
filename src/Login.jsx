@@ -34,7 +34,7 @@ function Login() {
     }
 
     axios
-      .get('http://localhost:1337/api/usuarios')
+      .get('http://172.27.98.4:1337/api/usuarios')
       .then((response) => {
         const mappedUsers = response.data.data.map((user) => ({
           Genero: user.attributes.Genero,

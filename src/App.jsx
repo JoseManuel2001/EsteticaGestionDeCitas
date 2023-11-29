@@ -28,7 +28,7 @@ function App() {
 
     // Función para eliminar una cita
     const handleEliminarUsuario = (id) => {
-        axios.delete(`http://localhost:1337/api/citas/${id}`)
+        axios.delete(`http://172.27.98.4:1337/api/citas/${id}`)
             .then(response => {
                 console.log("Cita Eliminada:", response.data);
                 setData(prevData => prevData.filter(user => user.id !== id));
@@ -38,15 +38,15 @@ function App() {
             });
     };
 
- 
+
     const handleClickReportes = () => {
-            navigate('/Reportes');
+        navigate('/Reportes');
     };
 
     // Efecto que se ejecuta al cambiar la fecha seleccionada
     useEffect(() => {
         const formattedDate = selectedDate.toISOString().split('T')[0];
-        axios.get('http://localhost:1337/api/citas')
+        axios.get('http://172.27.98.4:1337/api/citas')
             .then(response => {
                 // Filtra las citas para mostrar solo las del día seleccionado
                 const filteredCitas = response.data.data.filter(cita => {
@@ -55,67 +55,77 @@ function App() {
                 });
                 const mappedCitas = filteredCitas.map(cita => ({
                     id: cita.id,
-                    userId: cita.attributes.userId,
                     Nombre: cita.attributes.Nombre,
                     Servicio: cita.attributes.Servicio,
                     Horario: cita.attributes.Horario,
                     Costo: cita.attributes.Costo,
                     Fecha: cita.attributes.Fecha,
-                    Rol: cita.attributes.Role,
                 }));
-                
+
                 setData(mappedCitas);
             })
             .catch(error => {
                 console.error('Error al obtener datos:', error);
             });
-    }, [selectedDate]);
+    }, [selectedDate,]);
 
     // Renderizado del componente
     return (
         <>
             {/* Encabezado de la aplicación */}
-            <Header title='Citas' desc='Lista de citas'/>
+            <Header title='Citas' desc='Lista de citas' />
 
             {/* Contenido principal */}
-            <div className="App">
-                <label> Selecciona el día</label>
-                <DatePicker className="Date" selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
-                <button className='Button' onClick={handleClickAgregar}>Añadir</button>
-                <table className='UsuariosT'>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th className='th1'>Servicio</th>
-                            <th>Horario</th>
-                            <th>Costo</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((cita) => (
-                            <tr key={cita.id}>
-                                <td>{cita.Nombre}</td>
-                                <td className='td1'>{cita.Servicio}</td>
-                                <td>{cita.Horario}</td>
-                                <td>{cita.Costo}</td>
-                                <td>{cita.Fecha}</td>
-                                <td className='Botones'>
-                                    {user && user.id === cita.userId && (
-                                        <>
-                                            <button onClick={() => handleClickEditar(cita.id)}>Editar</button>
-                                            <button onClick={() => handleEliminarUsuario(cita.id)}>Eliminar</button>
-                                        </>
-                                    )}
-                                </td>
+            <div className='content'>
+                <div className="App">
+                    <div className='opciones'>
+                        <label> Selecciona el día</label>
+                        <DatePicker className="Date" selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
+                        <button className='ButtonA' onClick={handleClickAgregar}>Añadir</button>
+                    </div>
+                    <table className='UsuariosT'>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th className='th1'>Servicio</th>
+                                <th>Horario</th>
+                                <th>Costo</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {data.map((cita) => (
+                                <tr key={cita.id}>
+                                    <td>{cita.Nombre}</td>
+                                    <td className='td1'>{cita.Servicio}</td>
+                                    <td>{cita.Horario}</td>
+                                    <td>{cita.Costo}</td>
+                                    <td>{cita.Fecha}</td>
+                                    <td className='Botones'>
+                                        {
+                                            (user.Role === 'Admin' || user.Nombre === cita.Nombre)
+                                            &&
+                                            <>
+                                                <button onClick={() => handleClickEditar(cita.id)}>Editar</button>
+                                                <button onClick={() => handleEliminarUsuario(cita.id)}>Eliminar</button>
+                                            </>
+                                        }
+
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            {/* Botón para acceder a la página de reportes */}
-            <button onClick={handleClickReportes}>Reportes </button>
+            <div className='divRep'>
+                {
+                    user.Role === 'Admin' &&
+                    <button className='ButtonR' onClick={handleClickReportes}>Reportes</button>
+                }
+            </div>
         </>
     );
 }

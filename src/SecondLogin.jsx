@@ -27,7 +27,7 @@ function SecoundLogin() {
 
   const navigateToApp = () => {
     if (googleLoggedIn) {
-      Navigate('/App2');
+      Navigate('/App');
       setLoggedIn(true);
     } else {
       console.log("Debes autenticarte con Google primero");

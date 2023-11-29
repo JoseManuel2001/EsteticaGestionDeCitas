@@ -3,7 +3,7 @@
 .divHeader{
     font-family: 'Lato', sans-serif;
     color: #282828;
-    background-color: #d18fdd;
+    background: linear-gradient(180deg, pink, white);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -36,7 +36,7 @@
 
 .divLogout{
     height: 100%;
-    width: 18%;
+    width: 350px;
     display: flex;
     justify-content: start;
     align-items: center;

@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../src/Styles/Registrar.css';
 import Header from './Header';
+import { UserContext } from './UserContext';
 
 function Registrar() {
+    const { user } = useContext(UserContext);
     const Navigate = useNavigate();
     const [data, setData] = useState([]);
     const [newUser, setNewUser] = useState({
-        Nombre: "",
+        Nombre: user.Nombre,
         Servicio: "",
         Horario: "",
         Costo: "",
@@ -16,7 +18,7 @@ function Registrar() {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:1337/api/citas')
+        axios.get('http://172.27.98.4:1337/api/citas')
             .then(response => {
                 const reportesData = response.data.data.map(report => ({
                     id: report.id,
@@ -79,12 +81,13 @@ function Registrar() {
         const selectedDate = newUser.Fecha;
         const selectedHorario = newUser.Horario;
 
+
         if (!isHorarioAvailable(selectedDate, selectedHorario)) {
             return; // Detiene el proceso si el horario no está disponible
         }
 
         axios
-            .post("http://localhost:1337/api/citas", { "data": newUser })
+            .post("http://172.27.98.4:1337/api/citas", { "data": newUser })
             .then((response) => {
                 console.log("Cita registrada:", response.data.data);
 
@@ -96,7 +99,7 @@ function Registrar() {
                     Fecha: "",
                 });
 
-                axios.get('http://localhost:1337/api/citas')
+                axios.get('http://172.27.98.4:1337/api/citas')
                     .then(response => {
                         const reportesData = response.data.data.map(report => ({
                             id: report.id,
@@ -116,7 +119,7 @@ function Registrar() {
                 console.error("Error al registrar cita:", error);
             });
 
-        Navigate("/App2");
+        Navigate("/App");
     };
 
     const generateHorarioOptions = () => {
@@ -137,8 +140,7 @@ function Registrar() {
             <Header title='Citas' desc='Registra tu cita' />
             <form className='form1' onSubmit={handleSubmit}>
                 <label className='label1'>
-                    Nombre:
-                    <input type="text" name="Nombre" value={newUser.Nombre} onChange={handleInputChange} required />
+                    Nombre: {user.Nombre}
                 </label>
                 <br />
                 <label>
@@ -168,8 +170,8 @@ function Registrar() {
                     Costo: ${newUser.Costo}
                 </label>
                 <br />
-                <button type="submit">Registrar</button>
-                <button onClick={() => Navigate("/App2")}>Cancelar</button>
+                <button className='btnreg' type="submit">Registrar</button>
+                <button className='btncan' onClick={() => Navigate("/App")}>Cancelar</button>
             </form>
         </>
     );

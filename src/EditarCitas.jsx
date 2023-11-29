@@ -18,7 +18,7 @@ function EditarCita() {
 
     useEffect(() => {
         // Obtener datos de la cita actual
-        axios.get(`http://localhost:1337/api/citas/${id}`)
+        axios.get(`http://172.27.98.4:1337/api/citas/${id}`)
             .then(response => {
                 setEditedUser(response.data.data.attributes);
             })
@@ -27,7 +27,7 @@ function EditarCita() {
             });
 
         // Obtener datos de todas las citas
-        axios.get('http://localhost:1337/api/citas')
+        axios.get('http://172.27.98.4:1337/api/citas')
             .then(response => {
                 const reportesData = response.data.data.map(report => ({
                     id: report.id,
@@ -106,7 +106,7 @@ function EditarCita() {
             return;
         }
 
-        axios.put(`http://localhost:1337/api/citas/${id}`, { "data": editedUser })
+        axios.put(`http://172.27.98.4:1337/api/citas/${id}`, { "data": editedUser })
             .then(response => {
                 console.log("Cita actualizada:", response.data.data);
                 navigate("/App");
