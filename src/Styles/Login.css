@@ -1,51 +1,51 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f8f4f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
+/* Login.css */
 
 .Login {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fce4ec; /* Color de fondo rosa claro */
+}
+
+.FormLogin {
+  background-color: #fff; /* Color de fondo blanco */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.Login h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
-  color: #e91e63;
+.FormLogin h1 {
+  color: #ff4081; /* Color de texto rosa */
 }
 
-.Login input {
-  width: calc(100% - 20px);
+.FormLogin input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border: 1px solid #ff4081; /* Borde rosa */
+  border-radius: 4px;
+}
+
+.FormLogin button {
+  width: 100%;
   padding: 12px;
-  margin-bottom: 20px;
-  border: 2px solid #e91e63;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-.Login button {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 20px);
-  padding: 14px;
-  background-color: #e91e63;
-  color: white;
+  margin: 15px 0;
+  box-sizing: border-box;
+  background-color: #ff4081; /* Color de fondo rosa */
+  color: #fff; /* Color de texto blanco */
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-bottom: 15px;
+  font-size: 16px;
 }
 
-.Login button:hover {
-  background-color: #c2185b;
+.FormLogin button:hover {
+  background-color: #f50057; /* Color de fondo rosa oscuro al pasar el ratón */
+}
+
+/* Puedes ajustar estos estilos según tus preferencias */
+
 }

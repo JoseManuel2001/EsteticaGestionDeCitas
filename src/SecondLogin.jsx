@@ -1,43 +1,71 @@
-import React, { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import './Styles/SecoundLogin.css';
+import { useState, useEffect } from 'react';
+import { gapi } from "gapi-script";
+import GoogleLogin from 'react-google-login';
+import { useNavigate } from 'react-router-dom';
 
-const SecondLogin = () => {
-  const [codigo, setCodigo] = useState('');
-  const [mensaje, setMensaje] = useState('');
-
-  const handleCodigoChange = (e) => {
-    setCodigo(e.target.value);
-  };
+function SecoundLogin() {
+  const clientID = "53496067689-ga7cu7bub9a35nugrpd93eg3hvhkungk.apps.googleusercontent.com";
+  const [user, setUser] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [googleLoggedIn, setGoogleLoggedIn] = useState(false);
   const Navigate = useNavigate();
-  const handleReenviarCodigo = () => {
-    // Lógica para reenviar el código por correo
-    setMensaje('Código reenviado por correo');
+
+  const onSuccess = (response) => {
+    setUser(response.profileObj);
+    setGoogleLoggedIn(true);
   };
 
-  const handleValidarCodigo = () => {
-    // Lógica para validar el código ingresado
-    if (codigo === 'codigo_correcto') {
-      setMensaje('Código válido. Acceso permitido.');
-      Navigate("/App")
+  const onFailure = (response) => {
+    console.log("Something went wrong");
+  };
+
+  const handleLogout = () => {
+    setUser({});
+    setLoggedIn(false);
+  };
+
+  const navigateToApp = () => {
+    if (googleLoggedIn) {
+      Navigate('/App2');
+      setLoggedIn(true);
     } else {
-      setMensaje('Código incorrecto. Por favor, inténtalo de nuevo.');
+      console.log("Debes autenticarte con Google primero");
     }
   };
 
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientID,
+      });
+    }
+    gapi.load("client:auth2", start);
+  }, []);
+
   return (
-    <div>
-      <h2>Segundo Login</h2>
-      <div>
-        <label>Código recibido por correo:</label>
-        <input type="text" value={codigo} onChange={handleCodigoChange} />
+    <div className="center">
+      <h1>Login</h1>
+
+      <div className='btn'>
+        <GoogleLogin
+          clientId={clientID}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          buttonText="Continue with Google"
+          cookiePolicy={"single_host_origin"}
+        />
       </div>
-      <div>
-        <button onClick={handleReenviarCodigo}>Reenviar Código</button>
-        <button onClick={handleValidarCodigo}>Validar Código</button>
+
+      <div className={user ? "profile" : "hidden"}>
+        <img src={user.imageUrl} alt="user" />
+        <h3>{user.name}</h3>
+        <button onClick={navigateToApp} disabled={!googleLoggedIn || loggedIn}>
+          Entrar
+        </button>
       </div>
-      <div>{mensaje}</div>
     </div>
   );
-};
+}
 
-export default SecondLogin;
+export default SecoundLogin;

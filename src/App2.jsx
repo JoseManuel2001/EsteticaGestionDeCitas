@@ -9,7 +9,7 @@ import { UserContext } from './UserContext'; // Importa el contexto de usuario
 import '../src/Styles/App.css';
 
 // Define el componente principal
-function App() {
+function App2() {
     // Estados y funciones del componente
     const [data, setData] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -38,10 +38,6 @@ function App() {
             });
     };
 
- 
-    const handleClickReportes = () => {
-            navigate('/Reportes');
-    };
 
     // Efecto que se ejecuta al cambiar la fecha seleccionada
     useEffect(() => {
@@ -100,31 +96,16 @@ function App() {
                                 <td>{cita.Horario}</td>
                                 <td>{cita.Costo}</td>
                                 <td>{cita.Fecha}</td>
-                                <td className='Botones'>
-                                    {user && user.id === cita.userId && (
-                                        <>
-                                            <button onClick={() => handleClickEditar(cita.id)}>Editar</button>
-                                            <button onClick={() => handleEliminarUsuario(cita.id)}>Eliminar</button>
-                                        </>
-                                    )}
-                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
 
-            {/* Botón para acceder a la página de reportes */}
-            <button onClick={handleClickReportes}>Reportes </button>
+            
         </>
     );
 }
 
 // Exporta el componente principal
-export default App;
-
-
-
-
-
-
+export default App2;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../src/Styles/Registrar.css';
@@ -6,22 +6,37 @@ import Header from './Header';
 
 function Registrar() {
     const Navigate = useNavigate();
-
+    const [data, setData] = useState([]);
     const [newUser, setNewUser] = useState({
         Nombre: "",
         Servicio: "",
         Horario: "",
-        Costo: "", // Este campo se llenará automáticamente según el servicio seleccionado
-        Fecha: "", // Almacenará la fecha seleccionada por el usuario desde el datepicker en formato 'YYYY-MM-DD'
+        Costo: "",
+        Fecha: "",
     });
+
+    useEffect(() => {
+        axios.get('http://localhost:1337/api/citas')
+            .then(response => {
+                const reportesData = response.data.data.map(report => ({
+                    id: report.id,
+                    Nombre: report.attributes.Nombre,
+                    Servicio: report.attributes.Servicio,
+                    Horario: report.attributes.Horario,
+                    Costo: report.attributes.Costo,
+                    Fecha: report.attributes.Fecha,
+                }));
+                setData(reportesData);
+            })
+            .catch(error => {
+                console.error('Error al obtener datos de citas:', error);
+            });
+    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        let costo = newUser.Costo; // Almacena el costo actual
+        let costo = newUser.Costo;
 
-        // Si el servicio es Corte, asigna el costo a 70
-        // Si el servicio es Tinte, asigna el costo a 150
-        // Si el servicio es Peinado, asigna el costo a 200
         if (name === "Servicio") {
             switch (value) {
                 case "Corte":
@@ -46,17 +61,33 @@ function Registrar() {
         });
     };
 
+    const isHorarioAvailable = (selectedDate, selectedHorario) => {
+        const citasEnFecha = data.filter(cita => cita.Fecha === selectedDate);
+        const horarioOcupado = citasEnFecha.some(cita => cita.Horario === selectedHorario);
+
+        if (horarioOcupado) {
+            // Muestra una alerta si el horario seleccionado ya está ocupado
+            alert('El horario seleccionado ya está ocupado. Por favor, elige otro.');
+        }
+
+        return !horarioOcupado;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Realiza una solicitud POST para crear un nuevo usuario
+        const selectedDate = newUser.Fecha;
+        const selectedHorario = newUser.Horario;
+
+        if (!isHorarioAvailable(selectedDate, selectedHorario)) {
+            return; // Detiene el proceso si el horario no está disponible
+        }
+
         axios
-            .post("http://localhost:1337/api/citas", { "data": newUser }) // Cambia la URL a la correcta
+            .post("http://localhost:1337/api/citas", { "data": newUser })
             .then((response) => {
-                // Aquí puedes manejar la respuesta si es necesario
                 console.log("Cita registrada:", response.data.data);
 
-                // Limpiar el formulario
                 setNewUser({
                     Nombre: "",
                     Servicio: "",
@@ -64,17 +95,46 @@ function Registrar() {
                     Costo: "",
                     Fecha: "",
                 });
+
+                axios.get('http://localhost:1337/api/citas')
+                    .then(response => {
+                        const reportesData = response.data.data.map(report => ({
+                            id: report.id,
+                            Nombre: report.attributes.Nombre,
+                            Servicio: report.attributes.Servicio,
+                            Horario: report.attributes.Horario,
+                            Costo: report.attributes.Costo,
+                            Fecha: report.attributes.Fecha,
+                        }));
+                        setData(reportesData);
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener datos de citas:', error);
+                    });
             })
             .catch((error) => {
                 console.error("Error al registrar cita:", error);
             });
 
-        Navigate("/App");
+        Navigate("/App2");
+    };
+
+    const generateHorarioOptions = () => {
+        const horarios = [];
+        for (let hour = 10; hour <= 20; hour++) {
+            for (let minute = 0; minute < 60; minute += 30) {
+                const formattedHour = hour.toString().padStart(2, "0");
+                const formattedMinute = minute.toString().padStart(2, "0");
+                const time = `${formattedHour}:${formattedMinute}`;
+                horarios.push(<option key={time} value={time}>{time}</option>);
+            }
+        }
+        return horarios;
     };
 
     return (
         <>
-        <Header title='Citas' desc='Registra tu cita'/>
+            <Header title='Citas' desc='Registra tu cita' />
             <form className='form1' onSubmit={handleSubmit}>
                 <label className='label1'>
                     Nombre:
@@ -98,19 +158,26 @@ function Registrar() {
                 <br />
                 <label>
                     Horario:
-                    <input type="text" name="Horario" value={newUser.Horario} onChange={handleInputChange} required />
+                    <select name="Horario" value={newUser.Horario} onChange={handleInputChange} required>
+                        <option value="">-- Selecciona un horario --</option>
+                        {generateHorarioOptions()}
+                    </select>
                 </label>
                 <br />
                 <label>
-                    Costo: ${newUser.Costo} {/* Muestra el costo */}
+                    Costo: ${newUser.Costo}
                 </label>
                 <br />
                 <button type="submit">Registrar</button>
-                <button onClick={() => Navigate("/App")}>Cancelar</button>
+                <button onClick={() => Navigate("/App2")}>Cancelar</button>
             </form>
         </>
     );
 }
 
 export default Registrar;
+
+
+
+
 

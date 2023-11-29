@@ -1,0 +1,32 @@
+/* App.css */
+
+.Reportes {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  background-color: #fff; /* Color de fondo blanco */
+}
+
+.ReportesT {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.ReportesT th, .ReportesT td {
+  border: 1px solid #ddd; /* Borde gris */
+  padding: 8px;
+  text-align: left;
+}
+
+.ReportesT th {
+  background-color: #ff4081; /* Color de fondo rosa */
+  color: #fff; /* Color de texto blanco */
+}
+
+.ReportesT td {
+  background-color: #fce4ec; /* Color de fondo rosa claro */
+}
+
+
+
+/* Puedes ajustar estos estilos según tus preferencias */
