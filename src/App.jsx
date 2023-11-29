@@ -44,13 +44,15 @@ function App() {
     };
 
     // Efecto que se ejecuta al cambiar la fecha seleccionada
+    // Efecto que se ejecuta al cambiar la fecha seleccionada
+    // Efecto que se ejecuta al cambiar la fecha seleccionada
     useEffect(() => {
-        const formattedDate = selectedDate.toISOString().split('T')[0];
+        const formattedDate = selectedDate.toLocaleDateString('es-ES'); // Ajusta 'es-ES' según tu localización
         axios.get('http://172.27.98.4:1337/api/citas')
             .then(response => {
                 // Filtra las citas para mostrar solo las del día seleccionado
                 const filteredCitas = response.data.data.filter(cita => {
-                    const citaFecha = cita.attributes.Fecha.split('T')[0];
+                    const citaFecha = new Date(cita.attributes.Fecha).toLocaleDateString('es-ES');
                     return citaFecha === formattedDate;
                 });
                 const mappedCitas = filteredCitas.map(cita => ({
@@ -67,7 +69,9 @@ function App() {
             .catch(error => {
                 console.error('Error al obtener datos:', error);
             });
-    }, [selectedDate,]);
+    }, [selectedDate]);
+
+
 
     // Renderizado del componente
     return (
