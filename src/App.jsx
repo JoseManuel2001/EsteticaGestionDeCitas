@@ -6,6 +6,9 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import Header from './Header';
 import { UserContext } from './UserContext'; // Importa el contexto de usuario
+import { format, parseISO } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { utcToZonedTime } from 'date-fns-tz';
 import '../src/Styles/App.css';
 
 // Define el componente principal
@@ -47,14 +50,19 @@ function App() {
     // Efecto que se ejecuta al cambiar la fecha seleccionada
     // Efecto que se ejecuta al cambiar la fecha seleccionada
     useEffect(() => {
-        const formattedDate = selectedDate.toLocaleDateString('es-ES'); // Ajusta 'es-ES' según tu localización
+        const mexicoTimeZone = 'America/Mexico_City';
+        const formattedDate = format(selectedDate, 'yyyy-MM-dd', { locale: es }); // Formato 'YYYY-MM-DD'
+
         axios.get('http://172.27.98.4:1337/api/citas')
             .then(response => {
-                // Filtra las citas para mostrar solo las del día seleccionado
                 const filteredCitas = response.data.data.filter(cita => {
-                    const citaFecha = new Date(cita.attributes.Fecha).toLocaleDateString('es-ES');
-                    return citaFecha === formattedDate;
+                    const citaDate = parseISO(cita.attributes.Fecha);
+                    const zonedCitaDate = utcToZonedTime(citaDate, mexicoTimeZone);
+                    const formattedCitaDate = format(zonedCitaDate, 'yyyy-MM-dd', { locale: es });
+
+                    return formattedCitaDate === formattedDate;
                 });
+
                 const mappedCitas = filteredCitas.map(cita => ({
                     id: cita.id,
                     Nombre: cita.attributes.Nombre,
