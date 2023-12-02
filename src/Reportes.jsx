@@ -10,7 +10,7 @@ function Reportes() {
 
   useEffect(() => {
     // Lógica para obtener datos de reportes, ajusta la URL según tus necesidades
-    axios.get('http://172.27.98.4:1337/api/citas')
+    axios.get('http://localhost:1337/api/citas')
       .then(response => {
         const reportesData = response.data.data.map(report => ({
           id: report.id,

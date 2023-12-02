@@ -17,7 +17,7 @@ function Registro() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://172.27.98.4:1337/api/usuarios', {
+            const response = await axios.post('http://localhost:1337/api/usuarios', {
                 "data": {
                     Nombre,
                     Genero,

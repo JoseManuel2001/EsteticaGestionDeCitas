@@ -30,8 +30,23 @@ function App() {
     };
 
     // Función para eliminar una cita
-    const handleEliminarUsuario = (id) => {
-        axios.delete(`http://172.27.98.4:1337/api/citas/${id}`)
+    const handleEliminarUsuario = (id, citaFecha, citaHorario) => {
+        const now = new Date();
+        const citaCompleta = new Date(`${citaFecha} ${citaHorario}`);
+    
+        // Calcula la diferencia en milisegundos
+        const timeDifference = citaCompleta - now;
+    
+        // Convierte la diferencia de tiempo a minutos
+        const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+    
+        if (minutesDifference < 30) {
+            // No permitir eliminar si la cita está dentro de los próximos 30 minutos
+            console.log('No se puede eliminar la cita dentro de los próximos 30 minutos.');
+            return;
+        }
+    
+        axios.delete(`http://localhost:1337/api/citas/${id}`)
             .then(response => {
                 console.log("Cita Eliminada:", response.data);
                 setData(prevData => prevData.filter(user => user.id !== id));
@@ -53,7 +68,7 @@ function App() {
         const mexicoTimeZone = 'America/Mexico_City';
         const formattedDate = format(selectedDate, 'yyyy-MM-dd', { locale: es }); // Formato 'YYYY-MM-DD'
 
-        axios.get('http://172.27.98.4:1337/api/citas')
+        axios.get('http://localhost:1337/api/citas')
             .then(response => {
                 const filteredCitas = response.data.data.filter(cita => {
                     const citaDate = parseISO(cita.attributes.Fecha);

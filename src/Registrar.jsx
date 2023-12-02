@@ -18,7 +18,7 @@ function Registrar() {
     });
 
     useEffect(() => {
-        axios.get('http://172.27.98.4:1337/api/citas')
+        axios.get('http://localhost:1337/api/citas')
             .then(response => {
                 const reportesData = response.data.data.map(report => ({
                     id: report.id,
@@ -87,7 +87,7 @@ function Registrar() {
         }
 
         axios
-            .post("http://172.27.98.4:1337/api/citas", { "data": newUser })
+            .post("http://localhost:1337/api/citas", { "data": newUser })
             .then((response) => {
                 console.log("Cita registrada:", response.data.data);
 
@@ -99,7 +99,7 @@ function Registrar() {
                     Fecha: "",
                 });
 
-                axios.get('http://172.27.98.4:1337/api/citas')
+                axios.get('http://localhost:1337/api/citas')
                     .then(response => {
                         const reportesData = response.data.data.map(report => ({
                             id: report.id,
